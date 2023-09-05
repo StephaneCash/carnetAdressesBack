@@ -39,8 +39,22 @@ const login = async (req, res) => {
     }
 };
 
+const getUserById = async (req, res) => {
+    try {
+        let user = await userCase.getOneUser(req);
+        res.status(200).json({
+            status: 200,
+            message: "L'utilisateur a été trouvé avec succès",
+            data: user
+        })
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     createUser,
     getAllUsers,
-    login
+    login,
+    getUserById
 }

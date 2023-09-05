@@ -1,6 +1,6 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
-const { findUserExistWithEmail } = require('./userModules');
+const { findUserExistByEmail, findUserById } = require('./userModules');
 const jwt = require("jsonwebtoken");
 
 const createUser = async (req) => {
@@ -22,7 +22,7 @@ const createUser = async (req) => {
 
                 const passwordHased = await bcrypt.hash(password, 10);
 
-                const usserExist = await findUserExistWithEmail(email);
+                const usserExist = await findUserExistByEmail(email);
 
                 if (usserExist) {
                     throw new Error(`Cette adresse email ${usserExist.email} existe déjà, veuillez fournir une autre`)
@@ -65,7 +65,7 @@ const authentifacation = async (req) => {
             throw new Error("L'adresse email n'est pas définie");
         } else {
             if (pattern.test(email)) {
-                const usserExist = await findUserExistWithEmail(email);
+                const usserExist = await findUserExistByEmail(email);
 
                 if (usserExist) {
                     if (!password) {
@@ -97,8 +97,23 @@ const authentifacation = async (req) => {
     }
 }
 
+const getOneUser = async (req) => {
+    const {id } = req.params;
+    try {
+        let user = await findUserById(id);
+        if (user) {
+            return user;
+        } else {
+            throw new Error("Aucun utilisateur trouvé avec l'id " + id);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
     fetchUsers,
-    authentifacation
+    authentifacation,
+    getOneUser
 }
