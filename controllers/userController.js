@@ -19,7 +19,8 @@ const getAllUsers = async (req, res) => {
         res.status(200).json({
             status: 200,
             message: "La liste de users a été bien trouvée",
-            data: users
+            length: users.length,
+            data: users,
         })
     } catch (error) {
         return res.status(500).json({ message: error });
@@ -48,13 +49,26 @@ const getUserById = async (req, res) => {
             data: user
         })
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(404).json({ message: error.message });
     }
 }
+
+const deleteUser = async (req, res) => {
+    try {
+        await userCase.deleteUser(req);
+        res.status(200).json({
+            status: 200,
+            message: "L'utilisateur a été supprimé avec succès"
+        });
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+};
 
 module.exports = {
     createUser,
     getAllUsers,
     login,
-    getUserById
+    getUserById,
+    deleteUser
 }

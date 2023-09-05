@@ -98,7 +98,7 @@ const authentifacation = async (req) => {
 }
 
 const getOneUser = async (req) => {
-    const {id } = req.params;
+    const { id } = req.params;
     try {
         let user = await findUserById(id);
         if (user) {
@@ -111,9 +111,29 @@ const getOneUser = async (req) => {
     }
 }
 
+const deleteUser = async (req) => {
+    const { id } = req.params;
+    try {
+        let user = await findUserById(id);
+        if (user) {
+            let isDestroy = await user.destroy({ where: { id: id } });
+            if (isDestroy) {
+                return isDestroy
+            } else {
+                throw new Error("L'utilisateur n'a pas été supprimé " + id);
+            }
+        } else {
+            throw new Error("Aucun utilisateur trouvé avec l'id " + id);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
     fetchUsers,
     authentifacation,
-    getOneUser
+    getOneUser,
+    deleteUser
 }
