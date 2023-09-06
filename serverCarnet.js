@@ -15,6 +15,9 @@ app.use("/api/users", usersRouter);
 const categoriesRouter = require("./routes/categorieRouter");
 app.use("/api/categories", categoriesRouter);
 
+const entitesRouter = require("./routes/entitesRouter");
+app.use("/api/entites", entitesRouter);
+
 app.use("/api/uploads", express.static('./uploads'));
 
 const PORT = process.env.PORT;

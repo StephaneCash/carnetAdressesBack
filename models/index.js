@@ -33,6 +33,16 @@ db.sequelize = sequelize;
 
 db.users = require("./userModel")(sequelize, DataTypes);
 db.categories = require("./categorieModel")(sequelize, DataTypes);
+db.entites = require("./entiteModel")(sequelize, DataTypes);
+
+db.categories.hasMany(db.entites, {
+    as: "entites"
+});
+
+db.entites.belongsTo(db.categories, {
+    foreignKey: "categorieId",
+    as: "categorie"
+});
 
 db.sequelize.sync({ force: false })
     .then(() => {
