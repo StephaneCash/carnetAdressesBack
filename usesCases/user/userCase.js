@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../../models');
 const bcrypt = require('bcrypt');
 const { findUserExistByEmail, findUserById } = require('./userModules');
 const jwt = require("jsonwebtoken");

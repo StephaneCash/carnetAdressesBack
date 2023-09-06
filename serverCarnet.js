@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 const usersRouter = require("./routes/userRoutes");
 app.use("/api/users", usersRouter);
 
+const categoriesRouter = require("./routes/categorieRouter");
+app.use("/api/categories", categoriesRouter);
+
 app.use("/api/uploads", express.static('./uploads'));
 
 const PORT = process.env.PORT;

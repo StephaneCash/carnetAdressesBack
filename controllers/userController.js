@@ -1,4 +1,4 @@
-const userCase = require("../usesCases/userCase");
+const userCase = require("../usesCases/user/userCase");
 
 const createUser = async (req, res) => {
     try {

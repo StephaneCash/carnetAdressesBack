@@ -32,6 +32,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users = require("./userModel")(sequelize, DataTypes);
+db.categories = require("./categorieModel")(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false })
     .then(() => {
