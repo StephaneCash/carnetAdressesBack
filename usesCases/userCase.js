@@ -111,6 +111,42 @@ const getOneUser = async (req) => {
     }
 }
 
+const updateUser = async (req) => {
+    let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    let passwordHased = ""
+    const { id } = req.params;
+    const { pseudo, email, password, isActive, role } = req.body;
+
+    if (password) {
+        passwordHased = await bcrypt.hash(password, 10);
+    }
+
+    try {
+        let user = await findUserById(id);
+        if (email ? pattern.test(email) : true) {
+            let updateUserFind = await user.update({
+                password: password ? passwordHased : user.password,
+                email,
+                pseudo,
+                isActive,
+                role
+            }, {
+                where: { id: id }
+            });
+
+            if (updateUserFind) {
+                return updateUserFind;
+            } else {
+                throw new Error("L'utilisateur n'a pas été modifié");
+            }
+        } else {
+            throw new Error("L'adresse email fournie n'est pas valide");
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 const deleteUser = async (req) => {
     const { id } = req.params;
     try {
@@ -135,5 +171,6 @@ module.exports = {
     fetchUsers,
     authentifacation,
     getOneUser,
-    deleteUser
+    deleteUser,
+    updateUser
 }

@@ -53,6 +53,19 @@ const getUserById = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    try {
+        let userUpdate = await userCase.updateUser(req);
+        res.status(200).json({
+            status: 200,
+            message: "L'utilisateur a été modifié avec succès",
+            data: userUpdate
+        })
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+}
+
 const deleteUser = async (req, res) => {
     try {
         await userCase.deleteUser(req);
@@ -70,5 +83,6 @@ module.exports = {
     getAllUsers,
     login,
     getUserById,
-    deleteUser
+    deleteUser,
+    updateUser
 }
