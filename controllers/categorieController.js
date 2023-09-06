@@ -49,7 +49,9 @@ const updateCategorie = async (req, res) => {
             data: categorieUpdate
         })
     } catch (error) {
-        return res.status(404).json({ message: error.message });
+        return res.status(
+            error.message.includes('déjà') ? 400 : 404
+        ).json({ message: error.message });
     }
 }
 

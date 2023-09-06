@@ -50,12 +50,18 @@ const updateCategorie = async (req) => {
     const { id } = req.params;
     try {
         const categorie = await getCategorieById(id);
-        const { nom, description } = req.body;
+        const { nom, desc } = req.body;
         if (categorie) {
-            let categorieUpdate = await categorie.update({
-                nom, description
-            }, { where: { id: id } });
-            return categorieUpdate;
+            if (nom === categorie.nom) {
+                throw new Error("Une catégorie porte déjà ce nom, veuillez fournir un autre nom que " + nom);
+            } else {
+                let categorieUpdate = await categorie.update(
+                    {
+                        nom: nom ? nom : categorie.nom,
+                        desc: desc ? desc : categorie.desc
+                    }, { where: { id: id } });
+                return categorieUpdate;
+            }
         } else {
             throw new Error("Aucune catégorie trouvée avec l'id " + id);
         }
