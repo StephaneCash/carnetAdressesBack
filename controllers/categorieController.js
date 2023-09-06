@@ -57,10 +57,11 @@ const updateCategorie = async (req, res) => {
 
 const deleteCategorie = async (req, res) => {
     try {
-        await categorieUsesCases.deleteCategorie(req);
+        let data = await categorieUsesCases.deleteCategorie(req);
         res.status(200).json({
             status: 200,
-            message: "L'utilisateur a été supprimé avec succès"
+            message: "La catégorie a été supprimée avec succès",
+            data: data
         });
     } catch (error) {
         return res.status(404).json({ message: error.message });

@@ -70,7 +70,7 @@ const updateCategorie = async (req) => {
     }
 }
 
-const deleteCategorie = async () => {
+const deleteCategorie = async (req) => {
     const { id } = req.params;
     try {
         const categorie = await getCategorieById(id);
