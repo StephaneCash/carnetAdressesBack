@@ -2,7 +2,7 @@ const db = require('../../models');
 
 const getCategorieById = async (id) => {
     try {
-        let categorie = await db.categories.findByPk(id);
+        let categorie = await db.categories.findByPk(id, { include: [{ model: db.entites, as: "entites" }] });
         return categorie;
     } catch (error) {
         throw error;
