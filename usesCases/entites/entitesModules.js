@@ -9,6 +9,16 @@ const findEntiteByName = async (nom) => {
     }
 };
 
+const findEntiteById = async (id) => {
+    try {
+        const entite = await db.entites.findByPk(id);
+        return entite;
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     findEntiteByName,
+    findEntiteById
 }

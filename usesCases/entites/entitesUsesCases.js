@@ -1,5 +1,5 @@
 const db = require("../../models");
-const { findEntiteByName } = require("./entitesModules");
+const { findEntiteByName, findEntiteById } = require("./entitesModules");
 
 const createEntite = async (req) => {
     try {
@@ -54,9 +54,70 @@ const fetchAllEntites = async () => {
     } catch (error) {
         throw error;
     }
+};
+
+const updateEntite = async (req) => {
+
+    const { id } = req.params;
+    const { nom, desc, commune, quartier, adresseComplete, categorieId } = req.body;
+
+    try {
+        let entite = await findEntiteById(id);
+        if (entite) {
+            if (req.file) {
+                let entiteUpdate = await entite.update({
+                    nom,
+                    desc,
+                    commune,
+                    quartier,
+                    adresseComplete,
+                    categorieId,
+                    image: req.file.path
+                },
+                    {
+                        where: { id: id }
+                    });
+                return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
+            } else {
+
+                let entiteUpdate = await entite.update({
+                    nom,
+                    desc,
+                    commune,
+                    quartier,
+                    adresseComplete,
+                    categorieId,
+                },
+                    {
+                        where: { id: id }
+                    });
+                return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
+            }
+        } else {
+            throw new Error("Aucune entité trouvée avec cet id " + id);
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+const getEntityById = async (req) => {
+    const { id } = req.params;
+    try {
+        const entite = await db.entites.findByPk(id, { include: [{ model: db.categories, as: "categorie" }] });
+        if (entite) {
+            return entite;
+        } else {
+            throw new Error("Aucune entité trouvée avec le id " + id);
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = {
     createEntite,
-    fetchAllEntites
+    fetchAllEntites,
+    updateEntite,
+    getEntityById
 }
