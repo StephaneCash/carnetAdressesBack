@@ -20,7 +20,7 @@ const createEntite = async (req) => {
         if (findEntiteExist) {
             throw new Error("Le nom fourni est déjà pris, veuillez trouver un autre");
         }
-        
+
         const newEntite = await db.entites.create({
             nom,
             desc,
@@ -55,35 +55,19 @@ const updateEntite = async (req) => {
 
         if (entite) {
             if (entite.nom !== nom) {
-                if (req.file) {
-                    let entiteUpdate = await entite.update({
-                        nom,
-                        desc,
-                        commune,
-                        quartier,
-                        adresseComplete,
-                        categorieId,
-                        image: `api/${req.file.path}`
-                    },
-                        {
-                            where: { id: id }
-                        });
-                    return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
-                } else {
-
-                    let entiteUpdate = await entite.update({
-                        nom,
-                        desc,
-                        commune,
-                        quartier,
-                        adresseComplete,
-                        categorieId,
-                    },
-                        {
-                            where: { id: id }
-                        });
-                    return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
-                }
+                let entiteUpdate = await entite.update({
+                    nom,
+                    desc,
+                    commune,
+                    quartier,
+                    adresseComplete,
+                    categorieId,
+                    image: req.file && `api/${req.file.path}`
+                },
+                    {
+                        where: { id: id }
+                    });
+                return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
             } else {
                 throw new Error("Une entité porte déjà ce nom, veuillez fournir un autre")
             }
