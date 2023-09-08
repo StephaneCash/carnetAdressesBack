@@ -121,9 +121,24 @@ const getEntityById = async (req) => {
     }
 }
 
+const delteEntity = async (req) => {
+    const { id } = req.params;
+    try {
+        let entite = await findEntiteById(id);
+        if (entite) {
+            return await entite.destroy({ where: { id: id } });
+        } else {
+            throw new Error("Aucune entité trouvée avec le id " + id);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createEntite,
     fetchAllEntites,
     updateEntite,
-    getEntityById
+    getEntityById,
+    delteEntity
 }

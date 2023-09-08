@@ -1,4 +1,4 @@
-const { createEntite, fetchAllEntites, updateEntite } = require("../usesCases/entites/entitesUsesCases");
+const { createEntite, fetchAllEntites, updateEntite, getEntityById, delteEntity } = require("../usesCases/entites/entitesUsesCases");
 
 const newEntite = async (req, res) => {
     try {
@@ -40,9 +40,36 @@ const editEntity = async (req, res) => {
     }
 };
 
+const deleteEntite = async (req, res) => {
+    try {
+        const entite = await delteEntity(req);
+        res.status(200).json({
+            status: 200,
+            message: "L'entité a été bien supprimé",
+        })
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
+const getOneEntityById = async (req, res) => {
+    try {
+        const entite = await getEntityById(req);
+        res.status(200).json({
+            status: 200,
+            message: "L'entité a été bien trouvée",
+            data: entite
+        })
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
 
 module.exports = {
     newEntite,
     getAllEntites,
-    editEntity
+    editEntity,
+    deleteEntite,
+    getOneEntityById
 }
