@@ -13,7 +13,7 @@ const createCategorie = async (req) => {
             throw new Error("Une catégorie porte déjà ce nom, veuillez fournir un autre nom que" + nom);
         } else {
             let newCategorie = await db.categories.create({
-                nom, desc
+                nom, desc, image: req.file && `api/${req.file.path}`
             });
             return newCategorie
         }
@@ -58,7 +58,8 @@ const updateCategorie = async (req) => {
                 let categorieUpdate = await categorie.update(
                     {
                         nom: nom ? nom : categorie.nom,
-                        desc: desc ? desc : categorie.desc
+                        desc: desc ? desc : categorie.desc,
+                        image: req.file ? `api/${req.file.path}` : categorie.image
                     }, { where: { id: id } });
                 return categorieUpdate;
             }

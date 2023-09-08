@@ -6,8 +6,12 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
         desc: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
+        },
+        image: {
+            type: DataTypes.STRING,
+            defaultValue: "https://cdn-icons-png.flaticon.com/512/5044/5044265.png",
         },
     });
 

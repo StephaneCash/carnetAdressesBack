@@ -20,28 +20,17 @@ const createEntite = async (req) => {
         if (findEntiteExist) {
             throw new Error("Le nom fourni est déjà pris, veuillez trouver un autre");
         }
-        if (req.file) {
-            const newEntite = await db.entites.create({
-                nom,
-                desc,
-                commune,
-                quartier,
-                adresseComplete,
-                categorieId,
-                image: req.file.path
-            });
-            return newEntite;
-        } else {
-            const newEntite = await db.entites.create({
-                nom,
-                desc,
-                commune,
-                quartier,
-                adresseComplete,
-                categorieId
-            });
-            return db.entites.findByPk(newEntite.id, { include: [{ model: db.categories, as: "categorie" }] });
-        }
+        
+        const newEntite = await db.entites.create({
+            nom,
+            desc,
+            commune,
+            quartier,
+            adresseComplete,
+            categorieId,
+            image: req.file && `api/${req.file.path}`
+        });
+        return db.entites.findByPk(newEntite.id, { include: [{ model: db.categories, as: "categorie" }] });
     } catch (error) {
         throw error;
     }
@@ -61,7 +50,6 @@ const updateEntite = async (req) => {
     const { id } = req.params;
     const { nom, desc, commune, quartier, adresseComplete, categorieId } = req.body;
 
-
     try {
         let entite = await findEntiteById(id);
 
@@ -75,7 +63,7 @@ const updateEntite = async (req) => {
                         quartier,
                         adresseComplete,
                         categorieId,
-                        image: req.file.path
+                        image: `api/${req.file.path}`
                     },
                         {
                             where: { id: id }

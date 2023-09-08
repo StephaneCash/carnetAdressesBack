@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         quartier: {
             type: DataTypes.STRING,
-            allowNull: false,
         },
         adresseComplete: {
             type: DataTypes.TEXT,
