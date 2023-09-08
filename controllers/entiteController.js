@@ -1,4 +1,4 @@
-const { createEntite, fetchAllEntites } = require("../usesCases/entites/entitesUsesCases");
+const { createEntite, fetchAllEntites, updateEntite } = require("../usesCases/entites/entitesUsesCases");
 
 const newEntite = async (req, res) => {
     try {
@@ -27,7 +27,22 @@ const getAllEntites = async (req, res) => {
     }
 };
 
+const editEntity = async (req, res) => {
+    try {
+        const entite = await updateEntite(req);
+        res.status(200).json({
+            status: 200,
+            message: "L'entité a été bien modifiée",
+            data: entite
+        })
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
+
 module.exports = {
     newEntite,
-    getAllEntites
+    getAllEntites,
+    editEntity
 }

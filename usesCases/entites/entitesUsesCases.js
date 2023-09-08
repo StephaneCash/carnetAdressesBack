@@ -61,37 +61,43 @@ const updateEntite = async (req) => {
     const { id } = req.params;
     const { nom, desc, commune, quartier, adresseComplete, categorieId } = req.body;
 
+
     try {
         let entite = await findEntiteById(id);
-        if (entite) {
-            if (req.file) {
-                let entiteUpdate = await entite.update({
-                    nom,
-                    desc,
-                    commune,
-                    quartier,
-                    adresseComplete,
-                    categorieId,
-                    image: req.file.path
-                },
-                    {
-                        where: { id: id }
-                    });
-                return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
-            } else {
 
-                let entiteUpdate = await entite.update({
-                    nom,
-                    desc,
-                    commune,
-                    quartier,
-                    adresseComplete,
-                    categorieId,
-                },
-                    {
-                        where: { id: id }
-                    });
-                return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
+        if (entite) {
+            if (entite.nom !== nom) {
+                if (req.file) {
+                    let entiteUpdate = await entite.update({
+                        nom,
+                        desc,
+                        commune,
+                        quartier,
+                        adresseComplete,
+                        categorieId,
+                        image: req.file.path
+                    },
+                        {
+                            where: { id: id }
+                        });
+                    return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
+                } else {
+
+                    let entiteUpdate = await entite.update({
+                        nom,
+                        desc,
+                        commune,
+                        quartier,
+                        adresseComplete,
+                        categorieId,
+                    },
+                        {
+                            where: { id: id }
+                        });
+                    return db.entites.findByPk(entiteUpdate.id, { include: [{ model: db.categories, as: "categorie" }] });
+                }
+            } else {
+                throw new Error("Une entité porte déjà ce nom, veuillez fournir un autre")
             }
         } else {
             throw new Error("Aucune entité trouvée avec cet id " + id);
