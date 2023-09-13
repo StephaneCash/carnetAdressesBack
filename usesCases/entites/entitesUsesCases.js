@@ -3,7 +3,7 @@ const { findEntiteByName, findEntiteById } = require("./entitesModules");
 
 const createEntite = async (req) => {
     try {
-        const { nom, desc, commune, quartier, adresseComplete, categorieId } = req.body;
+        const { nom, desc, commune, quartier, adresseComplete, categorieId, lon, lat } = req.body;
         let findEntiteExist = await findEntiteByName(nom);
 
         if (!nom)
@@ -28,6 +28,7 @@ const createEntite = async (req) => {
             quartier,
             adresseComplete,
             categorieId,
+            lat, lon,
             image: req.file && `api/${req.file.path}`
         });
         return db.entites.findByPk(newEntite.id, { include: [{ model: db.categories, as: "categorie" }] });
@@ -48,7 +49,7 @@ const fetchAllEntites = async () => {
 const updateEntite = async (req) => {
 
     const { id } = req.params;
-    const { nom, desc, commune, quartier, adresseComplete, categorieId } = req.body;
+    const { nom, desc, commune, quartier, adresseComplete, categorieId, lon, lat } = req.body;
 
     try {
         let entite = await findEntiteById(id);
@@ -62,6 +63,7 @@ const updateEntite = async (req) => {
                     quartier,
                     adresseComplete,
                     categorieId,
+                    lon, lat,
                     image: req.file && `api/${req.file.path}`
                 },
                     {

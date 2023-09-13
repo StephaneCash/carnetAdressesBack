@@ -22,6 +22,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: "https://cdn-icons-png.flaticon.com/512/5044/5044265.png",
         },
+        video: {
+            type: DataTypes.STRING
+        },
+        lon: {
+            type: DataTypes.DOUBLE,
+        },
+        lat: {
+            type: DataTypes.DOUBLE,
+        }
     });
 
     return Entite;

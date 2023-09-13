@@ -9,6 +9,7 @@ const createCategorie = async (req, res) => {
             data: newCategorie
         });
     } catch (error) {
+        console.log(error , " ERR")
         return res.status(400).json({ message: error.message });
     }
 };

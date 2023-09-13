@@ -24,7 +24,7 @@ const createCategorie = async (req) => {
 
 const fetchCategories = async () => {
     try {
-        let categories = await db.categories.findAll();
+        let categories = await db.categories.findAll({ include: [{ model: db.entites, as: "entites" }] });
         return categories;
     } catch (error) {
         throw error
