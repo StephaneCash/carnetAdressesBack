@@ -30,6 +30,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         lat: {
             type: DataTypes.DOUBLE,
+        },
+        tels: {
+            type: DataTypes.STRING
+        },
+        email: {
+            type: DataTypes.STRING,
+            validate: {
+                isEmail: true
+            }
         }
     });
 
