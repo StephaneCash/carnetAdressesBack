@@ -51,6 +51,7 @@ const deleted = async (id) => {
         throw error;
     }
 }
+
 module.exports = {
     create, deleted, modif
 }
