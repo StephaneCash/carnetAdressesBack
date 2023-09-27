@@ -20,6 +20,7 @@ const create = async (req) => {
         throw error;
     }
 }
+
 const modif = async (req) => {
     const { id } = req.params;
     try {
