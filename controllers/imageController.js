@@ -42,5 +42,5 @@ const deleteImage = async (req, res) => {
 module.exports = {
     createImage,
     deleteImage,
-    modifImage
+    modifImage,
 }
