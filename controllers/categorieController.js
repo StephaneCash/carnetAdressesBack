@@ -62,7 +62,7 @@ const deleteCategorie = async (req, res) => {
         res.status(200).json({
             status: 200,
             message: "La catégorie a été supprimée avec succès",
-            data: data
+            data: data,
         });
     } catch (error) {
         return res.status(404).json({ message: error.message });
