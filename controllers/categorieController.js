@@ -12,7 +12,6 @@ const createCategorie = async (req, res) => {
         console.log(error , " ERR")
         return res.status(400).json({ message: error.message });
     }
-    
 };
 
 const getAllCategories = async (req, res) => {
