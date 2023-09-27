@@ -19,7 +19,7 @@ const modifImage = async (req, res) => {
         res.status(201).json({
             status: 201,
             message: "Image a été mofifiée avec succès",
-            data: data
+            data: data,
         });
     } catch (error) {
         return res.status(400).json({ message: error.message });
