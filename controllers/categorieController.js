@@ -34,7 +34,7 @@ const getCategorieById = async (req, res) => {
         res.status(200).json({
             status: 200,
             message: "La catégorie a été trouvée avec succès",
-            data: categorie
+            data: categorie,
         })
     } catch (error) {
         return res.status(404).json({ message: error.message });
