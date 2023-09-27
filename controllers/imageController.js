@@ -13,6 +13,7 @@ const createImage = async (req, res) => {
     }
 };
 
+
 const modifImage = async (req, res) => {
     try {
         let data = await image.modif(req);
