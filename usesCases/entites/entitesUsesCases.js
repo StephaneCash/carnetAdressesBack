@@ -31,7 +31,7 @@ const createEntite = async (req) => {
             lat, lon,
             image: req.file && `api/${req.file.path}`
         });
-        return db.entites.findByPk(newEntite.id, { include: [{ model: db.categories, as: "categorie" }] });
+        return db.entites.findByPk(newEntite.id, { include: [{ model: db.categories, as: "categorie" }, { model: db.images, as: "images" }] });
     } catch (error) {
         throw error;
     }
@@ -84,7 +84,7 @@ const updateEntite = async (req) => {
 const getEntityById = async (req) => {
     const { id } = req.params;
     try {
-        const entite = await db.entites.findByPk(id, { include: [{ model: db.categories, as: "categorie" }] });
+        const entite = await db.entites.findByPk(id, { include: [{ model: db.categories, as: "categorie" }, { model: db.images, as: "images" }] });
         if (entite) {
             return entite;
         } else {

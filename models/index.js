@@ -34,6 +34,9 @@ db.sequelize = sequelize;
 db.users = require("./userModel")(sequelize, DataTypes);
 db.categories = require("./categorieModel")(sequelize, DataTypes);
 db.entites = require("./entiteModel")(sequelize, DataTypes);
+db.images = require("./imagesModel")(sequelize, DataTypes);
+
+// CATEGORIE - ADRESSE 1-N
 
 db.categories.hasMany(db.entites, {
     as: "entites"
@@ -42,6 +45,17 @@ db.categories.hasMany(db.entites, {
 db.entites.belongsTo(db.categories, {
     foreignKey: "categorieId",
     as: "categorie"
+});
+
+// ADRESSE - IMAGE 1-N
+
+db.entites.hasMany(db.images, {
+    as: "images"
+});
+
+db.images.belongsTo(db.entites, {
+    foreignKey: "entiteId",
+    as: "entite"
 });
 
 db.sequelize.sync({ force: false })
