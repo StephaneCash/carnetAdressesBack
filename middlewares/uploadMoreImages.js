@@ -23,6 +23,6 @@ const upload = multer({
         }
         return cb("Veuillez fournir un bon format de fichiers à télécharger");
     }
-}).array('image', 5);
+}).array('image', 10);
 
 module.exports = upload;

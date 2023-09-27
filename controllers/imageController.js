@@ -13,6 +13,19 @@ const createImage = async (req, res) => {
     }
 };
 
+const modifImage = async (req, res) => {
+    try {
+        let data = await image.modif(req);
+        res.status(201).json({
+            status: 201,
+            message: "Image a été mofifiée avec succès",
+            data: data
+        });
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
 const deleteImage = async (req, res) => {
     try {
         let data = await image.deleted(req);
@@ -29,4 +42,5 @@ const deleteImage = async (req, res) => {
 module.exports = {
     createImage,
     deleteImage,
+    modifImage
 }

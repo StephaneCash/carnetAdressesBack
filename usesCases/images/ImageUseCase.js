@@ -21,6 +21,25 @@ const create = async (req) => {
     }
 }
 
+const modif = async (req) => {
+    const { id } = req.params;
+    try {
+        const image = await findById(id);
+        if (image) {
+            let imageUpdate = await image.update(
+                {
+                    image: req.file ? `api/${req.file.path}` : image.image,
+                    entiteId: entiteId,
+                }, { where: { id: id } });
+            return imageUpdate;
+        } else {
+            throw new Error("Aucune image trouvée avec l'id " + id);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 const deleted = async (id) => {
     try {
         const image = await findById(id);
@@ -34,5 +53,5 @@ const deleted = async (id) => {
 }
 
 module.exports = {
-    create, deleted
+    create, deleted, modif
 }
