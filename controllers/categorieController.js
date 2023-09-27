@@ -6,7 +6,7 @@ const createCategorie = async (req, res) => {
         res.status(201).json({
             status: 201,
             message: "Catégorie créée avec succès",
-            data: newCategorie
+            data: newCategorie,
         });
     } catch (error) {
         console.log(error , " ERR")
